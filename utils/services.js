@@ -1,6 +1,8 @@
 const services = {
   JWT_KEY: "secret",
-  serverIP: `http://localhost:${process.env.PORT || 5500}`,
+  serverIP: `https://fast-caverns-27998.herokuapp.com/`,
 };
 
 module.exports = services;
+
+//https://fast-caverns-27998.herokuapp.com/
