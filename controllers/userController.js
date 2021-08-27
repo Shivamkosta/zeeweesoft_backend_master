@@ -71,6 +71,7 @@ exports.signUp = async (req, res) => {
 
 // User SignIn
 exports.signIn = async (req, res) => {
+  const { errors, isValid } = validateSignUpInput(req.body);
   try {
     const regex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -84,7 +85,7 @@ exports.signIn = async (req, res) => {
 
     const user = await User.findOne(details);
     if (!user) {
-      return res.status(401).json({ error: "User not found" });
+      return res.status(401).json({ errors: { email: "User not found" } });
     }
     if (!bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(401).json({ error: "Invalid Password" });

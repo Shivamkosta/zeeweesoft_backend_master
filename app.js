@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const connectDB = require("./utils/db");
+const cors = require('cors');
 const path = require("path");
 require("dotenv").config();
 
@@ -13,8 +14,12 @@ connectDB();
 
 const app = express();
 
+// cors
+app.use(cors());
+
 // to log which api is hit
 app.use(morgan("dev"));
+
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -25,9 +30,9 @@ app.use((req, res, next) => {
       "Access-Control-Allow-Methods",
       "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     );
-  
     next();
-  });
+});
+
 // body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "50mb" }));
